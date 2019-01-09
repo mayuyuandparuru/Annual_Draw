@@ -1,0 +1,25 @@
+body{
+    background-image: url("../img/bg/bground.jpg");
+    background-size: cover;
+    background-repeat: repeat-x;
+    height: 100%;
+    width: 100%;
+    float: left;
+}
+.body_head img{
+    float: left;
+    height: 70px;
+    width: 70px;
+}
+.body_head h1{
+    position: relative;
+    font-size: 70px;
+    font-family: STSong;
+    color: rgba(255, 255, 255, 255);
+    text-align: center;
+}
+.body_head{
+    position: fixedz;z-index: 999;
+    top: 0;
+}
+
