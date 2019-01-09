@@ -1,4 +1,4 @@
-body{
+html,body{
     background-image: url("../img/bg/bground.jpg");
     background-size: cover;
     background-repeat: repeat-x;
@@ -8,8 +8,8 @@ body{
 }
 .body_head img{
     float: left;
-    height: 70px;
-    width: 70px;
+    height: 80px;
+    width: 80px;
 }
 .body_head h1{
     position: relative;
@@ -22,4 +22,46 @@ body{
     position: fixedz;z-index: 999;
     top: 0;
 }
-
+.body_text{
+    width: 100%;
+    height: 100%;
+    text-align: center;
+}
+.half{
+    position: absolute;
+    height: 200px;
+    width:500px;
+    text-align:center;
+    z-index:30;
+}
+.setbox{
+    display: none;
+    position: fixed;
+    margin: 0;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 20%;
+    height: 20%;
+    overflow: auto;
+    background-color: rgb(0, 0,0);
+    background-color: rgb(0, 0,0,0.4);
+}
+.setbox_centent{
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid#888;
+    width: 80%;
+}
+.close{
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+.close:hover, .close:focus{
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}

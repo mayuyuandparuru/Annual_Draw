@@ -8,12 +8,41 @@
     </head>
     <body>
         <div class="body_head">
-            <img src="img/logo/logo.jpg" alt="logo...">
+            <img src="img/logo/logo.jpg" alt="logo">
             <h1>上海谐桐年会抽奖</h1>
         </div>
         <div>
-            
-
+            <div style="float:left;width: 70%">
+                <div class="body_text">
+                    <div id="luckynumber">
+                        <input id="shownumber" readonly type="text" style="height:150px;width:300px;text-align: center;"/>
+                    </div>
+                    <div>
+                        <input type="button" id="start" onclick="start()" value="start">
+                        <input type="button" id="stop" onclick="stop()" value="stop">
+                    </div>
+                </div>
+            </div>
+            <div style="float:left;width: 200px;height: 400px;border: 1px black">
+                <div>
+                    <p>抽中号码</p>
+                </div>
+                <div>
+                    <ol id="luck"></ol>
+                </div>
+                <div>
+                    <input id="btnset" type="button" value="btnset" onclick="showsetbox()">
+                    <div id="set_box" class="setbox" >
+                        <div class="setbox_content">
+                            <span class="close" onclick="close()">&times;</span>
+                            <p>设置参加抽奖的人数：</p>
+                            <p><input id="innumber" type="text"></p>
+                            <input type="button" onclick="submit()" value="提交">&nbsp;&nbsp;&nbsp;
+                            <input type="button" onclick="reset()" value="重置">
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </body>
 </html>
