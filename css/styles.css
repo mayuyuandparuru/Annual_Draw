@@ -9,7 +9,6 @@ html,body{
 .body_head img{
     float: left;
     height: 80px;
-    width: 80px;
 }
 .body_head h1{
     position: relative;
@@ -19,6 +18,7 @@ html,body{
     text-align: center;
 }
 .body_head{
+    width: 100%;
     position: fixedz;z-index: 999;
     top: 0;
 }
@@ -35,16 +35,18 @@ html,body{
     z-index:30;
 }
 #shownumber{
-    font-size: 100pt;
+    font-size: 150pt;
     font-family: Verdana;
     text-align: center;
 }
 .setbox{
+    position: absolute;
+    left: 40%;
+    top: 20%;
     display: none;
     position: fixed;
-    z-index: 1;
-    left: 0;
-    top: 0;
+    text-align: center;
+    z-index: 14;
     width: 20%;
     height: 20%;
     overflow: auto;
@@ -52,6 +54,7 @@ html,body{
     background-color: rgb(0, 0,0,0.4);
 }
 .setbox_centent{
+    position: absolute;
     margin: 0 auto;
     background-color: #fefefe;
     margin: 15% auto;
@@ -72,7 +75,7 @@ html,body{
 }
 .draw_div{
     float:left;
-    height: 500px;
+    height: 100%;
     width: 80%
 }
 #start.btn_style{
@@ -82,47 +85,71 @@ html,body{
     text-align: center;
 }
 .lucky_number{
-    padding-left: 65%;
+    padding-left: 60%;
+
 }
 .body_div{
-    float: left;
     width: 100%;
     height: 70%;
 }
-#luckynum_div{
-    float: left;
-    right: 20px;
-    top: 20px;
+.border{
+    border-style: groove;
+    border-width: 2px;
+    border-color: #aaa;
+    height: 200px;
+    width: 100px;
+}
+.luckynum_div{
+    
     bottom: 20px;
-    width: 200px;
+    float: left;
     height: 400px;
+    width: 200px;
     background-color: rgba(255, 255, 255, 2);
     border-radius: 5px;
 }
 .luckynum_title{
-    float: left;
-    width: 20%;
-    height: 20px;
+    text-align: center;
+    width: 100%;
+    height: 30px;
+    display: block;
+    line-height: 40px;
 }
 .lucky_div{
     /*box-sizing: border-box;*/
-    height: 100px;
-    width: 50px;
-    border: #aaa 2px;
+    width: 100%;
+    height: 340px;
 }
 .lucky_ul{
-    width: 20%;
-    height: 400px;
+    width: 100%;
+    height: 360px;
 }
 .lucky{
     list-style-type: none;
-    padding: 0 20px;
+    padding: 0;
     margin: 0;
     overflow-y: scroll;
-    position: absolute;
     top: 50px;
     bottom: 70px;
     width: 100%;
+    height: 340px;
+}
+.lucky>li{
+    font-size: 20px;
+    text-align: center;
+    margin-top: 10px;
+    position: relative;
+}
+.lucky>li div.portrait{
+    height: 30px;
+    width: 30px;
+    border-radius: 5px;
+    background-size: cover;
+}
+.div_bt{
+    width: 100%;
+    height: 30px;
+    text-align: center;
 }
 
 .show_num{
@@ -131,4 +158,22 @@ html,body{
     top: 0;
     left: 40px;
     right: 0;
+}
+#lucky_circle{
+    height: 225px;
+    width: 225px;
+    text-align: center;
+    background-image: url("../img/circle.png");
+    display: none;
+}
+#dropback{
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: #444;
+    z-index: 13;
+    opacity: 0.9;
+    display: none;
 }

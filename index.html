@@ -10,36 +10,40 @@
             <img src="img/logo/logo.jpg" alt="logo">
             <h1>上海谐桐年会抽奖</h1>
         </div>
+        <div class="bg">
+        </div>
         <div class="body_div">
             <div class="draw_div">
                 <div id="luckynumber" class="lucky_number">
                     <span id="shownumber">0</span>
                     <!--<input id="shownumber" readonly type="text" style="height:150px;width:300px;text-align: center;"/>-->
                 </div>
-                <div style="text-align: center">
+                <div style="padding-left: 60%;padding-top: 15%">
                     <button class="btn_style" id="start" onclick="begin()">开始</button>
                     <!--<button id="stop" onclick="stop()">结束</button>--> 
                 </div>
             </div>
-            <div class="lucknum_div">
+            <div class="luckynum_div">
                 <div class="luckynum_title">
                     <span>中奖号码</span>
                 </div>
-                <div class="luck_div">
-                    <ul id="luck" class="luck_ul"></ul>
-                </div>
-                <div>   
+                <ul id="luck" class="lucky"></ul>
+                <div class="div_bt">   
                     <button id="btnset" onclick="showsetbox()">设置</button>
-                    <div id="set_box" class="setbox" >   <!--弹窗-->
-                        <div class="setbox_content">
-                            <span class="close">&times;</span>
-                            <p>设置参加抽奖的人数：</p>
-                            <p><input id="innumber" type="number"></p>
-                            <button onclick="submit()">提交</button>&nbsp;&nbsp;&nbsp;
-                            <button onclick="reset()">重置</button>
-                        </div>
-                    </div>
                 </div>
+            </div>
+        </div>
+        <div id="lucky_circle">
+            <input type="number" style="font-size:10px">
+        </div>
+        <div id="dropback"></div>
+        <div id="set_box" class="setbox" >   <!--弹窗-->
+            <div class="setbox_content">
+                <span class="close">&times;</span>
+                <p>设置参加抽奖的人数：</p>
+                <p><input id="innumber" type="number"></p>
+                <button onclick="submit()">提交</button>&nbsp;&nbsp;&nbsp;
+                <button onclick="reset()">重置</button>
             </div>
         </div>
         <script src="js/draw.js"></script>
