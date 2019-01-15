@@ -17,38 +17,52 @@ var firstnum=num;
 var luckyn;
 var idn = 0;
 
-document.onkeydown=function(e){
-    if(!e){
-        e = window.event;
-    }
+startBtn.onclick = (e)=>{
+    console.log('------------------ click--------------')
+    begin();
+    e.preventDefault()
+    e.stopPropagation()
+}
+
+startBtn.onkeyup=function(e){
     if(e.keyCode == 13 && setbox.style.display=="none"){
-        begin();
+        console.log('----------------- enter-------------',e.keyCode)
+        // begin();
     }
     if(e.keyCode == 13 && setbox.style.display=="block"){
+        console.log('----------- block ------------------ ')
         submit();
         close();
     }
+    e.preventDefault()
+    e.stopPropagation()
 }
 function begin(){     //开始结束抽奖
+    console.log("--------------------begin start---------------------");
+    
     if(numberarry.length < 1){
         alert("已经全部抽取完毕啦！");
     }else if(!interval){
-        //console.log("start");
+        console.log("start");
+        clearInterval(interval);
         startBtn.innerHTML="结束";
         //startBtn.value="jieshu";
         flag = true;
         interval = setInterval(function(){
             luckn = run_num(numberarry[Math.floor((Math.random()*numberarry.length))]);
             console.log(luckn);
-        },50);
+        },10);
     }else if(flag==true){
         stop();
-        
+    }
+    else{
+        console.log("=========================")
     }
 }
 function stop(){ //结束
     flag = false;
     startBtn.innerHTML="继续";
+    console.log(startBtn.innerHTML);
     //alert(luckn);
     clearInterval(interval);
     interval = null;
@@ -78,10 +92,16 @@ function add_num(lucknum){
     else{
         var ans="id"+(idn-1);
         console.log(ans);
-        ul.insertBefore(obj,document.getElementById("ans"));
+        ul.insertBefore(obj,document.getElementById(ans));
     }
     //document.getElementById('luck').innerHTML += "&nbsp;"+"&nbsp;"+"&nbsp;"+"&nbsp;"+lucknum+"</br>";
     //$('.lucky'.prepend("<li><div class='show_num'>"+luckn+"</div></li>"));
+}
+function toggle1(){
+    document.getElementById("luck").style.overflowY="scroll";
+}
+function toggle2(){
+    document.getElementById("luck").style.overflowY="hidden";
 }
 function showsetbox(){
     setbox=document.getElementById("set_box"); //获取弹窗
@@ -95,6 +115,12 @@ function butOnClick(){
         but.close();
     }
 }
+window.onclick = function(event) {
+    if (event.target == setbox) {
+        setbox.style.display="none";
+        //close();
+    }
+}
 span.onclick=function(){
     close();
 }
@@ -105,6 +131,7 @@ function close(){
 Array.prototype.remove=function(val){
     for(let i = 0;i < this.length;i ++){
         if(this[i]==val){
+            console.log("删除"+val);
             this.splice(i,1);
             break;
         }

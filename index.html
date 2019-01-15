@@ -3,12 +3,13 @@
     <head>
         <meta charset="utf-8">
         <link rel="stylesheet" type="text/css" href="css/styles.css">
+        <!-- <script src="js/bg.js"></script> -->
         <title>Annual Draw</title>
     </head>
     <body>
         <div class="body_head">
-            <img src="img/logo/logo.jpg" alt="logo">
-            <h1>上海谐桐年会抽奖</h1>
+            <img src="img/logo/Group 8@3x.png" alt="logo">
+            <!--<h1>上海谐桐年会抽奖</h1>-->
         </div>
         <div class="bg">
         </div>
@@ -18,8 +19,8 @@
                     <span id="shownumber">0</span>
                     <!--<input id="shownumber" readonly type="text" style="height:150px;width:300px;text-align: center;"/>-->
                 </div>
-                <div style="padding-left: 60%;padding-top: 15%">
-                    <button class="btn_style" id="start" onclick="begin()">开始</button>
+                <div style="padding-left: 61%;padding-top: 10%;">
+                    <button class="btn_style" id="start">开始</button>
                     <!--<button id="stop" onclick="stop()">结束</button>--> 
                 </div>
             </div>
@@ -27,14 +28,11 @@
                 <div class="luckynum_title">
                     <span>中奖号码</span>
                 </div>
-                <ul id="luck" class="lucky"></ul>
+                <ul id="luck" class="lucky" onmouseover="toggle1()" onmouseout="toggle2()"></ul>
                 <div class="div_bt">   
                     <button id="btnset" onclick="showsetbox()">设置</button>
                 </div>
             </div>
-        </div>
-        <div id="lucky_circle">
-            <input type="number" style="font-size:10px">
         </div>
         <div id="dropback"></div>
         <div id="set_box" class="setbox" >   <!--弹窗-->
@@ -42,8 +40,8 @@
                 <span class="close">&times;</span>
                 <p>设置参加抽奖的人数：</p>
                 <p><input id="innumber" type="number"></p>
-                <button onclick="submit()">提交</button>&nbsp;&nbsp;&nbsp;
-                <button onclick="reset()">重置</button>
+                <button id="sub" onclick="submit()">提交</button>&nbsp;&nbsp;&nbsp;
+                <button id="re" onclick="reset()">重置</button>
             </div>
         </div>
         <script src="js/draw.js"></script>
