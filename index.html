@@ -7,43 +7,46 @@
         <title>Annual Draw</title>
     </head>
     <body>
-        <div class="body_head">
-            <img src="img/logo/Group 8@3x.png" alt="logo">
-            <!--<h1>上海谐桐年会抽奖</h1>-->
-        </div>
-        <div class="bg">
-        </div>
-        <div class="body_div">
-            <div class="draw_div">
-                <div id="luckynumber" class="lucky_number">
-                    <span id="shownumber">0</span>
-                    <!--<input id="shownumber" readonly type="text" style="height:150px;width:300px;text-align: center;"/>-->
+        <!--<canvas></canvas>-->
+            <div class="body_head">
+                <img src="img/logo/Group 8@3x.png" alt="logo">
+                <!--<h1>上海谐桐年会抽奖</h1>-->
+            </div>
+            <div class="bg">
+            </div>
+            <div class="body_div">
+                <div class="draw_div">
+                    <div id="luckynumber" class="lucky_number">
+                        <span id="shownumber">0</span>
+                        <!--<input id="shownumber" readonly type="text" style="height:150px;width:300px;text-align: center;"/>-->
+                    </div>
+                    <div style="padding-left: 45%; padding-top: 10%;">
+                        <button class="btn_style" id="start">开始</button>
+                        <!--<button id="stop" onclick="stop()">结束</button>--> 
+                    </div>
                 </div>
-                <div style="padding-left: 61%;padding-top: 10%;">
-                    <button class="btn_style" id="start">开始</button>
-                    <!--<button id="stop" onclick="stop()">结束</button>--> 
+                <div class="luckynum_div">
+                    <div class="luckynum_title">
+                        <span>中奖号码</span>
+                    </div>
+                    <ul id="luck" class="lucky" onmouseover="toggle1()" onmouseout="toggle2()"></ul>
+                    <div class="div_bt">   
+                        <button id="btnset" onclick="showsetbox()">设置</button>
+                    </div>
                 </div>
             </div>
-            <div class="luckynum_div">
-                <div class="luckynum_title">
-                    <span>中奖号码</span>
-                </div>
-                <ul id="luck" class="lucky" onmouseover="toggle1()" onmouseout="toggle2()"></ul>
-                <div class="div_bt">   
-                    <button id="btnset" onclick="showsetbox()">设置</button>
+            <div id="dropback"></div>
+            <div id="set_box" class="setbox" >   <!--弹窗-->
+                <div class="setbox_content">
+                    <span class="close">&times;</span>
+                    <p>设置参加抽奖的人数：</p>
+                    <p><input id="innumber" type="number"></p>
+                    <button id="sub" onclick="submit()">提交</button>&nbsp;&nbsp;&nbsp;
+                    <button id="re" onclick="reset()">重置</button>
                 </div>
             </div>
-        </div>
-        <div id="dropback"></div>
-        <div id="set_box" class="setbox" >   <!--弹窗-->
-            <div class="setbox_content">
-                <span class="close">&times;</span>
-                <p>设置参加抽奖的人数：</p>
-                <p><input id="innumber" type="number"></p>
-                <button id="sub" onclick="submit()">提交</button>&nbsp;&nbsp;&nbsp;
-                <button id="re" onclick="reset()">重置</button>
-            </div>
-        </div>
+
+        <!--<script src="js/Canvas.js"></script>-->
         <script src="js/draw.js"></script>
     </body>
 </html>

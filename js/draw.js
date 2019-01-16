@@ -1,11 +1,12 @@
 var pause = false;
-var num = 60;    //抽奖人数
+var num   
 var numberarry = []; //存放编号
 var luck_num = 1;
 var regust = [];
 var setbox;
 var interval = null; //控制器
 var startBtn = document.getElementById("start");
+var subbtn = document.getElementById("sub");
 var flag = false; //判断是否开始
 var run_luck = document.querySelector('#shownumber');
 var span = document.querySelector('.close');
@@ -13,10 +14,42 @@ var drop_back;
 var btn_set=document.querySelector("#btnset");
 var lownumber = 1;
 let luckn;
-var firstnum=num;
+var firstnum=60;//抽奖人数
 var luckyn;
 var idn = 0;
 
+print();
+function print(){
+    console.log("print");
+    console.log(localStorage.lucknums);
+    if(localStorage.getItem("lucknums")){
+    //if(localStorage.lucknums){
+        console.log("local"+localStorage.lucknum);
+        numberarry = fn(localStorage.getItem("lucknums"));
+        //numberarry = fn(localStorage.lucknums);
+        for(var i = 1;i <= localStorage.id;i ++){   //修改
+            var loid = "id"+i;
+            add_numlo(i,localStorage.loid);
+            console.log("localloid"+localStorage.loid);
+            //numberarry.remove(localStorage.loid);
+        }
+    }
+}
+function add_numlo(x,key){
+    console.log(key);
+    var ul = document.getElementById("luck");
+    var obj=document.createElement("li");
+    obj.innerHTML= "恭喜 "+ key +" 号";
+    obj.id="id"+x;
+    if(x == 1){
+        ul.appendChild(obj);
+    }
+    else{
+        var ans="id"+x;
+        console.log(ans);
+        ul.insertBefore(obj,document.getElementById(ans));
+    }
+}
 startBtn.onclick = (e)=>{
     console.log('------------------ click--------------')
     begin();
@@ -25,22 +58,22 @@ startBtn.onclick = (e)=>{
 }
 
 startBtn.onkeyup=function(e){
-    if(e.keyCode == 13 && setbox.style.display=="none"){
+    if(e.keyCode == 13){
         console.log('----------------- enter-------------',e.keyCode)
         // begin();
-    }
-    if(e.keyCode == 13 && setbox.style.display=="block"){
-        console.log('----------- block ------------------ ')
-        submit();
-        close();
     }
     e.preventDefault()
     e.stopPropagation()
 }
+subbtn.onkeydown=function(e){
+    if(e.keyCode == 13){
+        close();
+    }
+}
 function begin(){     //开始结束抽奖
     console.log("--------------------begin start---------------------");
-    
     if(numberarry.length < 1){
+        startBtn.innerHTML="没有啦";
         alert("已经全部抽取完毕啦！");
     }else if(!interval){
         console.log("start");
@@ -61,7 +94,7 @@ function begin(){     //开始结束抽奖
 }
 function stop(){ //结束
     flag = false;
-    startBtn.innerHTML="继续";
+    startBtn.innerHTML="下一个";
     console.log(startBtn.innerHTML);
     //alert(luckn);
     clearInterval(interval);
@@ -82,10 +115,12 @@ function run_num(number){
 function add_num(lucknum){
     idn ++;
     console.log(lucknum);
+    localStorage.id ++;                      //存储有问题
     var ul = document.getElementById("luck");
     var obj=document.createElement("li");
     obj.innerHTML= "恭喜 "+ lucknum+" 号";
     obj.id="id"+idn;
+    localStorage.setItem(obj.id,lucknum); //存储id和中奖编号
     if(idn == 1){
         ul.appendChild(obj);
     }
@@ -143,9 +178,14 @@ function submit(){  //获取人数
         alert("请输入人数！");
         return;
     }
+    localStorage.setItem("lucknums",num.value);
+    //localStorage.lucknum = num.value;
+    //localStorage.id=0;
+    localStorage.setItem("id",0);
     firstnum = num.value;
     numberarry = fn(num.value);
     document.getElementById("luck").innerHTML= null;
+    //localStorage.clear();
     startBtn.innerHTML="开始";
     run_luck.innerHTML=0;
     //alert(numberarry);
@@ -169,6 +209,8 @@ function reset(){
     console.log(firstnum);
     numberarry=fn(firstnum);
     document.getElementById("luck").innerHTML= null;
+    //localStorage.id=0;
+    localStorage.setItem("id",0);
+    //localStorage.clear();
     close();
 }
-

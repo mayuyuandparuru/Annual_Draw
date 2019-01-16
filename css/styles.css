@@ -8,23 +8,22 @@ html,body{
     width: 100%;
     float: left;
 }
-.body_head img{
-    float: left;
-    height: 80px;
-    position: relative;
-    left: 26%;
-    padding-top: 45px;
-    padding-bottom: 45px;
+.all_lucky{
+    height: 100%;
+    width: 100%;
+    z-index: 10;
+    position: fixed;
+    top: 0;
+    left: 0;
 }
-.body_head h1{
+.body_head img{
+    height: 80px;    
     position: relative;
-    font-size: 70px;
-    font-family: STSong;
-    color: rgba(255, 255, 255, 255);
-    text-align: center;
+    padding-top: 7%;
 }
 .body_head{
     width: 100%;
+    height: 30%;
     position: fixedz;
     z-index: 999;
     top: 0;
@@ -43,10 +42,11 @@ html,body{
     z-index:30;
 }
 #shownumber{
-    font-size: 150pt;
+    font-size: 200pt;
     font-family: Verdana;
     width: 254px;
     text-align: center;
+    color: #44c45a;
 }
 .setbox{
     position: absolute;
@@ -85,7 +85,9 @@ html,body{
 .draw_div{
     float:left;
     height: 100%;
-    width: 80%
+    padding-left: 20%;
+    width: 60%;
+    text-align: center;
 }
 #start.btn_style{
     display: block;
@@ -102,7 +104,7 @@ html,body{
     text-align: center;
 }
 .lucky_number{
-    padding-left: 55%;
+
 }
 .body_div{
     width: 100%;
@@ -213,3 +215,27 @@ html,body{
     font-weight:normal;
     font-family:Arial;
   }
+  canvas{
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+      background:rgba(255,255,255,0);
+	position:absolute;
+	z-index:1;
+	top:0px;
+	left:0px;
+  }
+ @keyframes drop{
+    0% {
+        transform: translateY(-100px);
+        opacity: 0;
+    }
+
+    90% {
+        opacity: 1;
+        transform: translateY(10px);
+    }
+    100% {
+        transform: translateY(0px);
+    }
+ }
