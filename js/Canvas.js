@@ -1,127 +1,154 @@
-var ctx = document.querySelector('canvas').getContext('2d');
-ctx.canvas.width = window.innerWidth;
-ctx.canvas.height = window.innerHeight;
-
-var sparks = [];
-var fireworks = [];
-var i = 2;
-while (i--) {
-    console.log("var ******");
-    fireworks.push(new Firework(Math.random() * window.innerWidth, Math.random() * window.innerHeight));
+var times = 10;
+var globalID;
+window.requestAnimFrame = ( function() {
+	return window.requestAnimationFrame ||
+				window.webkitRequestAnimationFrame ||
+				window.mozRequestAnimationFrame ||
+				function( callback ) {
+					window.setTimeout( callback, 1000 / 60 );
+				};
+})();
+var canvas = document.getElementById( 'canvas' ),
+		ctx = canvas.getContext( '2d' ),
+		cw = window.innerWidth,
+		ch = window.innerHeight,
+		fireworks = [],
+		particles = [],
+		hue = 120,
+		limiterTotal = 5,
+		limiterTick = 0,
+		timerTotal = 80,
+		timerTick = 0,
+		mousedown = false,
+		mx,
+		my;
+canvas.width = cw;
+canvas.height = ch;
+function random( min, max ) {
+	return Math.random() * ( max - min ) + min;
 }
-render();
-function render() {
-    setTimeout(render, 1000 / 60);
-    ctx.fillStyle = "rgba(255,255,255,0)";
-    ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height);
-    for (var firework of fireworks) {
-
-        console.log(firework)
-        if (firework.dead) {
-            continue;
-        }
-        firework.move();
-        firework.draw();
-    }
-    for (var spark of sparks) {
-        if (spark.dead) {
-            continue;
-        }
-        spark.move();
-        spark.draw();
-    }
-    if (Math.random() < 0.5) {
-        fireworks.push(new Firework());
-    }
+function calculateDistance( p1x, p1y, p2x, p2y ) {
+	var xDistance = p1x - p2x,
+			yDistance = p1y - p2y;
+	return Math.sqrt( Math.pow( xDistance, 2 ) + Math.pow( yDistance, 2 ) );
 }
-function Spark(x, y, color) {
-    this.x = x;
-    this.y = y;
-    this.dir = Math.random() * (Math.PI * 2);
-    this.dead = false;
-    this.color = color;
-    this.speed = Math.random() * 3 + 3;
-    this.walker = new Walker({
-        radius: 20,
-        speed: 0.25
-    })
-    this.gravity = 0.25;
-    this.dur = this.speed / 0.1;
-    this.move = function () {
-        this.dur--;
-        if (this.dur < 0) this.dead = true;
-
-        if (this.speed < 0) return;
-        if (this.speed > 0) this.speed -= 0.1;
-        var walk = this.walker.step();
-        this.x += Math.cos(this.dir + walk) * this.speed;
-        this.y += Math.sin(this.dir + walk) * this.speed;
-        this.y += this.gravity;
-        this.gravity += 0.05;
-    }
-    this.draw = function () {
-        drawCircle(this.x, this.y, 3, this.color);
-    }
+function Firework( sx, sy, tx, ty ) {
+	this.x = sx;
+	this.y = sy;
+	this.sx = sx;
+	this.sy = sy;
+	this.tx = tx;
+	this.ty = ty;
+	this.distanceToTarget = calculateDistance( sx, sy, tx, ty );
+	this.distanceTraveled = 0;
+	this.coordinates = [];
+	this.coordinateCount = 3;
+	while( this.coordinateCount-- ) {
+		this.coordinates.push( [ this.x, this.y ] );
+	}
+	this.angle = Math.atan2( ty - sy, tx - sx );
+	this.speed = 2;
+	this.acceleration = 1.05;
+	this.brightness = random( 50, 70 );
+	this.targetRadius = 1;
 }
-function Firework(x, y) {
-    this.xmove = new Walker({
-        radius: 10,
-        speed: 0.5
-    })
-    this.x = x || Math.random() * ctx.canvas.width;
-    this.y = y || ctx.canvas.height;
-    this.height = Math.random() * ctx.canvas.height / 2;
-    this.dead = false;
-    this.color = randomColor();
-    this.move = function () {
-        this.x += this.xmove.step();
-        if (this.y > this.height) {
-            this.y -= 1;
-        }
-        else {
-            this.burst();
-        }
-    }
-    this.draw = function () {
-        drawCircle(this.x, this.y, 1, this.color);
-    }
-    this.burst = function () {
-        this.dead = true;
-        var i = 100;
-        while (i--) {
-            sparks.push(new Spark(this.x, this.y, this.color));
-        }
-    }
+Firework.prototype.update = function( index ) {
+	this.coordinates.pop();
+	this.coordinates.unshift( [ this.x, this.y ] );
+	if( this.targetRadius < 8 ) {
+		this.targetRadius += 0.3;
+	} else {
+		this.targetRadius = 1;
+	}
+	this.speed *= this.acceleration;
+	var vx = Math.cos( this.angle ) * this.speed,
+			vy = Math.sin( this.angle ) * this.speed;
+	this.distanceTraveled = calculateDistance( this.sx, this.sy, this.x + vx, this.y + vy );
+	if( this.distanceTraveled >= this.distanceToTarget ) {
+		createParticles( this.tx, this.ty );
+		fireworks.splice( index, 1 );
+	} else {
+		this.x += vx;
+		this.y += vy;
+	}
 }
-function drawCircle(x, y, radius, color) {
-    color = color || '#FFF';
-    ctx.fillStyle = color;
-    ctx.fillRect(x - radius / 2, y - radius / 2, radius, radius);
+Firework.prototype.draw = function() {
+	ctx.beginPath();
+	ctx.moveTo( this.coordinates[ this.coordinates.length - 1][ 0 ], this.coordinates[ this.coordinates.length - 1][ 1 ] );
+	ctx.lineTo( this.x, this.y );
+	ctx.strokeStyle = 'hsl(' + hue + ', 100%, ' + this.brightness + '%)';
+	ctx.stroke();
+	ctx.beginPath();
+	ctx.arc( this.tx, this.ty, this.targetRadius, 0, Math.PI * 2 );
+	ctx.stroke();
 }
-function randomColor() {
-    return ['#6ae5ab', '#88e3b2', '#36b89b', '#7bd7ec', '#66cbe1'][Math.floor(Math.random() * 5)];
+function Particle( x, y ) {
+	this.x = x;
+	this.y = y;
+	this.coordinates = [];
+	this.coordinateCount = 5;
+	while( this.coordinateCount-- ) {
+		this.coordinates.push( [ this.x, this.y ] );
+	}
+	this.angle = random( 0, Math.PI * 2 );
+	this.speed = random( 1, 10 );
+	this.friction = 0.95;
+	this.gravity = 1;
+	this.hue = random( hue - 20, hue + 20 );
+	this.brightness = random( 50, 80 );
+	this.alpha = 1;
+	this.decay = random( 0.015, 0.03 );
 }
-function Walker(options) {
-    this.step = function () {
-        this.direction = Math.sign(this.target) * this.speed;
-        this.value += this.direction;
-        this.target ?
-            this.target -= this.direction :
-            (this.value) ?
-                (this.wander) ?
-                    this.target = this.newTarget() :
-                    this.target = -this.value :
-                this.target = this.newTarget();
-        return this.direction;
+Particle.prototype.update = function( index ) {
+	this.coordinates.pop();
+	this.coordinates.unshift( [ this.x, this.y ] );
+	this.speed *= this.friction;
+	this.x += Math.cos( this.angle ) * this.speed;
+	this.y += Math.sin( this.angle ) * this.speed + this.gravity;
+	this.alpha -= this.decay;
+	if( this.alpha <= this.decay ) {
+		particles.splice( index, 1 );
+	}
+}
+Particle.prototype.draw = function() {
+	ctx. beginPath();
+	ctx.moveTo( this.coordinates[ this.coordinates.length - 1 ][ 0 ], this.coordinates[ this.coordinates.length - 1 ][ 1 ] );
+	ctx.lineTo( this.x, this.y );
+	ctx.strokeStyle = 'hsla(' + this.hue + ', 100%, ' + this.brightness + '%, ' + this.alpha + ')';
+	ctx.stroke();
+}
+function createParticles( x, y ) {
+	var particleCount = 30;
+	while( particleCount-- ) {
+		particles.push( new Particle( x, y ) );
+	}
+}
+function play() {
+    globalID=requestAnimFrame( play );
+    console.log("loop---------------------------")
+	hue += 0.5;
+	ctx.globalCompositeOperation = 'destination-out';
+	ctx.fillStyle = 'rgba(0, 0, 0, 0.5)';
+	ctx.fillRect( 0, 0, cw, ch );
+	ctx.globalCompositeOperation = 'lighter';
+	var i = fireworks.length;
+	while( i-- ) {
+		fireworks[ i ].draw();
+		fireworks[ i ].update( i );
+	}
+	var i = particles.length;
+	while( i-- ) {
+		particles[ i ].draw();
+		particles[ i ].update( i );
     }
-    this.newTarget = function () {
-        return Math.round(Math.random() * (this.radius * 2) - this.radius);
+    
+    console.log(times--);
+    if(times > 0){
+        fireworks.push( new Firework( cw / 2, ch, random( 0, cw ), random( 0, ch / 2 ) ) );
+        times --;
     }
-    this.start = 0;
-    this.value = 0;
-    this.radius = options.radius;
-    this.target = this.newTarget();
-    this.direction = Math.sign(this.target);
-    this.wander = options.wander;
-    this.speed = options.speed || 1;
+    else if(times < -300){
+        cancelAnimationFrame(globalID);
+        //window.cancelAnimationFrame(play);
+    }
 }

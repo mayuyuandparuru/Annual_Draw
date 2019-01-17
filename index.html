@@ -3,11 +3,12 @@
     <head>
         <meta charset="utf-8">
         <link rel="stylesheet" type="text/css" href="css/styles.css">
-        <!-- <script src="js/bg.js"></script> -->
+        <script src="js/bg.js"></script>
         <title>Annual Draw</title>
     </head>
-    <body>
-        <!--<canvas></canvas>-->
+    <body id = "all">
+        <canvas id="canvas"></canvas>
+        <div class="all_lucky">
             <div class="body_head">
                 <img src="img/logo/Group 8@3x.png" alt="logo">
                 <!--<h1>上海谐桐年会抽奖</h1>-->
@@ -20,18 +21,20 @@
                         <span id="shownumber">0</span>
                         <!--<input id="shownumber" readonly type="text" style="height:150px;width:300px;text-align: center;"/>-->
                     </div>
-                    <div style="padding-left: 45%; padding-top: 10%;">
+                    <div style="height: 30%;width: 100%;text-align: center;">
                         <button class="btn_style" id="start">开始</button>
                         <!--<button id="stop" onclick="stop()">结束</button>--> 
                     </div>
                 </div>
-                <div class="luckynum_div">
-                    <div class="luckynum_title">
-                        <span>中奖号码</span>
-                    </div>
-                    <ul id="luck" class="lucky" onmouseover="toggle1()" onmouseout="toggle2()"></ul>
-                    <div class="div_bt">   
-                        <button id="btnset" onclick="showsetbox()">设置</button>
+                <div class="right_div">
+                    <div class="luckynum_div">
+                        <div class="luckynum_title">
+                            <span>中奖号码</span>
+                        </div>
+                        <ul id="luck" class="lucky" onmouseover="toggle1()" onmouseout="toggle2()"></ul>
+                        <div class="div_bt">   
+                            <button id="btnset" onclick="showsetbox()">设置</button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -45,8 +48,8 @@
                     <button id="re" onclick="reset()">重置</button>
                 </div>
             </div>
-
-        <!--<script src="js/Canvas.js"></script>-->
+        </div>
+        <script src="js/Canvas.js"></script>
         <script src="js/draw.js"></script>
     </body>
 </html>
